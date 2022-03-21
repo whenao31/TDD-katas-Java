@@ -25,7 +25,7 @@ public class StringCalculatorTest {
     // Two numbers, newline delimited, returns the sum
     @Test
     public void sameThatBeforeButNewLineDelimitedTest() throws Exception {
-        assertThat(stringCalculatorInstance.add("0\n2"), is(2));
+        assertThat(stringCalculatorInstance.add("0\n2\n2\n2"), is(6));
         assertThat(stringCalculatorInstance.add("1\n1"), is(2));
         assertThat(stringCalculatorInstance.add("1\n2"), is(3));
     }
@@ -53,5 +53,19 @@ public class StringCalculatorTest {
     @Test
     public void singleCharDelimiterTest() throws Exception {
         assertThat(stringCalculatorInstance.add("#2#1000"), is(1002));
+    }
+
+    // A multiple char delimiter can be defined on the first line
+    @Test
+    public void multipleCharDelimiterTest() throws Exception {
+        assertThat(stringCalculatorInstance.add("[###]2###1000"), is(1002));
+        assertThat(stringCalculatorInstance.add("[!!]2!!1000"), is(1002));
+    }
+
+    // multiple delimiters can be defined on the first line
+    @Test
+    public void multipleDelimiterTest() throws Exception {
+        assertThat(stringCalculatorInstance.add("[#][###]2###1000#1"), is(1003));
+        assertThat(stringCalculatorInstance.add("[!!][#][##][!]2!!1000##1#1!1"), is(1005));
     }
 }
