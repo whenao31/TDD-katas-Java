@@ -14,7 +14,7 @@ public class StringCalculator {
             String[] delimitersArr = new String[1];
             try {
                 temp = Integer.parseInt("" + values.charAt(0));
-                delimitersArr = null;
+                delimitersArr[0] = null;
             } catch(Exception e) {
                 if(("" + values.charAt(0)) == "-") {
                     delimiter = null;
@@ -30,13 +30,10 @@ public class StringCalculator {
                 }
             }
 
-            String[] splittedList = null;
             String[] splittedList2 = null;
             if((delimiter != null && delimiter.length() == 1) && (delimitersArr.length == 1 && delimitersArr[0] != null)) {
-                splittedList = values.substring(1, values.length()).split(delimiter);
-                splittedList2 = values.substring(values.indexOf(']') + 1, values.length()).split(delimitersArr[0]);
+                splittedList2 = values.substring(1, values.length()).split(delimitersArr[0]);
             } else if ((delimiter != null && delimiter.length() > 1) || (delimitersArr[0] != null && delimitersArr.length > 1)){
-                splittedList = values.substring(values.indexOf(']') + 1, values.length()).split(delimiter);
                 List<String> delimiterList = Arrays.asList(delimitersArr);
                 for (String del: delimiterList){
                     values = values.replaceAll(del, "_");
@@ -44,7 +41,6 @@ public class StringCalculator {
                 splittedList2 = values.substring(values.lastIndexOf(']') + 1, values.length()).split("_");
             }
             else {
-                splittedList = values.split("[,|\n]");
                 splittedList2 = values.split("[,|\n]");
             }
 
