@@ -4,36 +4,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StringCalculator {
     public int add(String values) throws Exception { //"1,1"
         if(values.length() > 0) {
             int temp;
-            String delimiter = null;
             String[] delimitersArr = new String[1];
             try {
                 temp = Integer.parseInt("" + values.charAt(0));
                 delimitersArr[0] = null;
             } catch(Exception e) {
                 if(("" + values.charAt(0)) == "-") {
-                    delimiter = null;
                     delimitersArr[0] = null;
                 } else if (values.charAt(0) == '['){
-                    delimiter = values.substring(1, values.indexOf(']'));
                     String subStringLast = values.substring(0, values.lastIndexOf(']'));
-                    delimitersArr = subStringLast.replace('[', ' ').replace(']', ' ').trim().replaceAll("\\s+", ";").split(";");
+                    delimitersArr = subStringLast
+                            .replace('[', ' ')
+                            .replace(']', ' ')
+                            .trim()
+                            .replaceAll("\\s+", ";")
+                            .split(";");
                     Arrays.sort(delimitersArr, Collections.reverseOrder());
                 } else {
-                    delimiter = "" + values.charAt(0);
                     delimitersArr[0] = "" + values.charAt(0);
                 }
             }
 
             String[] splittedList2 = null;
-            if((delimiter != null && delimiter.length() == 1) && (delimitersArr.length == 1 && delimitersArr[0] != null)) {
+            if(delimitersArr.length == 1 && delimitersArr[0] != null && delimitersArr[0].length() == 1) {
                 splittedList2 = values.substring(1, values.length()).split(delimitersArr[0]);
-            } else if ((delimiter != null && delimiter.length() > 1) || (delimitersArr[0] != null && delimitersArr.length > 1)){
+            } else if (delimitersArr[0] != null && (delimitersArr.length > 1 || delimitersArr[0].length() > 1)){
                 List<String> delimiterList = Arrays.asList(delimitersArr);
                 for (String del: delimiterList){
                     values = values.replaceAll(del, "_");
